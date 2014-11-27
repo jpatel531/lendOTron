@@ -1,0 +1,50 @@
+<ion-view title="Dashboard">
+<ion-content class="padding">
+<h1>Your balance is {{balance | currency:"£"}}</h1>
+
+
+<h3>What have you paid recently?</h3>
+<div class="list">
+	<label class="item item-input">
+		<input type="text" placeholder="Title">
+	</label>
+	<label class="item item-input">
+		<textarea placeholder="Description"></textarea>
+	</label>
+
+
+	<ul class="list">
+
+		<li ng-repeat="item in items track by $index">
+			 <div class="item item-divider">
+			 	Item
+			</div>
+
+			<label class="item item-input">
+				<input 
+				type="text" 
+				placeholder="Name" 
+				ng-keydown="createNewItem($event)" 
+				ng-model="item.name">
+			</label>
+			<label class="item item-input">
+				<input 
+				type="number"
+				min="0"
+				placeholder="Cost" 
+				ng-keydown="createNewItem($event)"
+				ng-model="item.cost">
+			</label>
+		</li>
+	</ul>
+</div>
+
+
+<h3 class="title">
+	Total Cost: {{total | currency:"£"}}
+</h3>
+</ion-content>
+
+
+
+</ion-view>
