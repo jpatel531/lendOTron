@@ -1,20 +1,21 @@
 angular.module('starter.controllers', [])
 
-.controller('DashCtrl', function($scope) {
+.controller('DashCtrl', function($scope, $http) {
 
-	$scope.balance = 51.32
+	window.serverUrl = "http://localhost:3000";
 
-	$scope.testing = "Hello"
+	$scope.balance = "-51.32"
 
-	$scope.items = [{}]
+	$scope.purchase = {};
+	$scope.purchase.items = [{}]
 
 	$scope.createNewItem = function(event){
 		if (event.keyCode !== 13) return;
-		if (!_.isEqual($scope.items[$scope.items.length - 1], {})) $scope.items.push({});
+		if (!_.isEqual($scope.purchase.items[$scope.purchase.items.length - 1], {})) $scope.purchase.items.push({});
 	}
 
-	$scope.$watch('items', function(){
-		var arrayOfPrices = _.map($scope.items, function(item){
+	$scope.$watch('purchase.items', function(){
+		var arrayOfPrices = _.map($scope.purchase.items, function(item){
 		 if (!item.cost) return 0;
 		 return item.cost;
 		})
@@ -23,9 +24,27 @@ angular.module('starter.controllers', [])
 		});
 	}, true);
 
+	$scope.submitPurchase = function(){
+		$http.post(window.serverUrl + '/purchases', $scope.purchase).success(function(data){
+
+		});
+	};
+
+
 })
 
-.controller('FriendsCtrl', function($scope, Friends) {
+.filter('negativeCurrency', ["$filter", function ($filter) {       
+  return function(amount, currencySymbol){
+     var currency = $filter('currency');         
+
+     if(amount.charAt(0) === "-"){
+        return currency(amount, currencySymbol).replace("(", "-").replace(")", ""); 
+     }
+
+     return currency(amount, currencySymbol);
+  };
+
+}]).controller('FriendsCtrl', function($scope, Friends) {
   $scope.friends = Friends.all();
 })
 

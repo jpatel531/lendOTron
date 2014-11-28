@@ -1,48 +1,61 @@
 <ion-view title="Dashboard">
 <ion-content class="padding">
-<h1>Your balance is {{balance | currency:"£"}}</h1>
+
+<div class="welcome">
+	
+	<h1>Your balance is {{balance | negativeCurrency:"£"}}</h1>
 
 
-<h3>What have you paid recently?</h3>
-<div class="list">
-	<label class="item item-input">
-		<input type="text" placeholder="Title">
-	</label>
-	<label class="item item-input">
-		<textarea placeholder="Description"></textarea>
-	</label>
+	<h3>What have you paid recently?</h3>
+	<div class="list">
+		<label class="item item-input">
+			<input type="text" placeholder="Title" ng-model="purchase.title">
+		</label>
+		<label class="item item-input">
+			<textarea placeholder="Description" ng-model="purchase.description"></textarea>
+		</label>
 
 
-	<ul class="list">
+		<ul class="list">
 
-		<li ng-repeat="item in items track by $index">
-			 <div class="item item-divider">
-			 	Item
-			</div>
+			<li ng-repeat="item in purchase.items track by $index">
+				 <div class="item item-divider">
+				 	Item
+				</div>
 
-			<label class="item item-input">
-				<input 
-				type="text" 
-				placeholder="Name" 
-				ng-keydown="createNewItem($event)" 
-				ng-model="item.name">
-			</label>
-			<label class="item item-input">
-				<input 
-				type="number"
-				min="0"
-				placeholder="Cost" 
-				ng-keydown="createNewItem($event)"
-				ng-model="item.cost">
-			</label>
-		</li>
-	</ul>
+				<label class="item item-input">
+					<input 
+					type="text" 
+					placeholder="Name" 
+					ng-keydown="createNewItem($event)" 
+					ng-model="item.name">
+				</label>
+				<label class="item item-input">
+					<input 
+					type="number"
+					min="0"
+					placeholder="Cost" 
+					ng-keydown="createNewItem($event)"
+					ng-model="item.cost">
+				</label>
+			</li>
+		</ul>
+
+	</div>
+
+	<h3 class="title">
+		Total Cost: {{total | currency:"£"}}
+	</h3>
+
+	<button 
+		class="button button-block button-positive"
+		ng-click="submitPurchase()">
+	  Submit That Shit
+	</button>
+
+
 </div>
 
-
-<h3 class="title">
-	Total Cost: {{total | currency:"£"}}
-</h3>
 </ion-content>
 
 
